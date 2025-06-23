@@ -1,38 +1,44 @@
 'use client'
 
+import { WavyLine } from './WavyLine'
+
 export function Team() {
   const teamMembers = [
     {
       id: 1,
-      name: 'Николай',
-      position: 'Основатель & CEO',
-      description: 'Эксперт в области цифрового маркетинга с 8-летним опытом',
-      image: '/img/team/nikolay.jpg',
-      skills: ['Стратегия', 'Управление', 'Маркетинг'],
-    },
-    {
-      id: 2,
-      name: 'Анна',
-      position: 'Lead Designer',
-      description: 'Создает уникальные дизайны, которые продают',
-      image: '/img/team/anna.jpg',
+      name: 'Анна Петрова',
+      position: 'Дизайнер',
+      description:
+        'Создает уникальные и современные дизайны, которые привлекают внимание и продают',
+      image: '/img/team/anna-petrova.jpg',
       skills: ['UI/UX', 'Брендинг', 'Веб-дизайн'],
     },
     {
-      id: 3,
-      name: 'Михаил',
-      position: 'Senior Developer',
-      description: 'Разрабатывает современные и быстрые веб-решения',
-      image: '/img/team/mikhail.jpg',
+      id: 2,
+      name: 'Михаил Иванов',
+      position: 'Разработчик',
+      description:
+        'Воплощает самые смелые идеи в жизнь с помощью современных технологий',
+      image: '/img/team/mikhail-ivanov.jpg',
       skills: ['React', 'Node.js', 'TypeScript'],
     },
     {
+      id: 3,
+      name: 'Елена Сидорова',
+      position: 'Маркетолог',
+      description:
+        'Эксперт по продвижению бизнеса в интернете и привлечению целевой аудитории',
+      image: '/img/team/elena-sidorova.jpg',
+      skills: ['SEO', 'Контекст', 'Аналитика'],
+    },
+    {
       id: 4,
-      name: 'Елена',
-      position: 'Marketing Manager',
-      description: 'Специалист по продвижению и привлечению клиентов',
-      image: '/img/team/elena.jpg',
-      skills: ['SEO', 'Контекст', 'Соцсети'],
+      name: 'Дмитрий Козлов',
+      position: 'Менеджер проектов',
+      description:
+        'Координирует работу команды и следит за качественным выполнением проектов',
+      image: '/img/team/dmitriy-kozlov.jpg',
+      skills: ['Управление', 'Планирование', 'Коммуникации'],
     },
   ]
 
@@ -47,9 +53,11 @@ export function Team() {
         {/* Заголовок */}
         <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-7xl font-bold text-[#F2F2F2] mb-6">
-            Команда
+            Наша команда
           </h2>
-          <div className="w-32 h-2 bg-[#AAFF00] mx-auto rounded-full" />
+          <div className="flex justify-center">
+            <WavyLine width={128} height={10} className="text-[#AAFF00]" />
+          </div>
         </div>
 
         {/* Сетка команды */}
@@ -57,7 +65,7 @@ export function Team() {
           {teamMembers.map((member) => (
             <div
               key={member.id}
-              className="group relative bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] rounded-lg overflow-hidden hover:transform hover:scale-105 hover:-translate-y-2 transition-all duration-300"
+              className="group relative bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] rounded-lg overflow-hidden hover:transform hover:scale-105 hover:-translate-y-2 transition-all duration-300 border border-[#333] hover:border-[#AAFF00]"
             >
               {/* Фото */}
               <div className="relative h-64 overflow-hidden">
@@ -66,11 +74,14 @@ export function Team() {
                   style={{ backgroundImage: `url(${member.image})` }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-[#AAFF00] opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
               </div>
 
               {/* Контент */}
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-[#F2F2F2] mb-2">
+                <h3 className="text-xl font-bold text-[#F2F2F2] mb-2">
                   {member.name}
                 </h3>
                 <p className="text-[#AAFF00] text-lg font-medium mb-4">
@@ -92,11 +103,20 @@ export function Team() {
                   ))}
                 </div>
               </div>
-
-              {/* Hover эффект */}
-              <div className="absolute inset-0 bg-[#AAFF00] opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
             </div>
           ))}
+        </div>
+
+        {/* Дополнительная информация о команде */}
+        <div className="mt-16 text-center">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-[#F2F2F2] text-lg lg:text-xl leading-relaxed opacity-90">
+              Наша команда — это сплоченный коллектив профессионалов, где каждый
+              эксперт в своей области. Мы объединяем креативность, технические
+              навыки и маркетинговую экспертизу для создания успешных проектов,
+              которые приносят реальные результаты нашим клиентам.
+            </p>
+          </div>
         </div>
       </div>
     </section>

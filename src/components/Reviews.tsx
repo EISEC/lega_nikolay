@@ -1,5 +1,7 @@
 'use client'
 
+import { WavyLine } from './WavyLine'
+
 export function Reviews() {
   const reviews = [
     {
@@ -49,7 +51,9 @@ export function Reviews() {
           <h2 className="text-5xl lg:text-7xl font-bold text-[#F2F2F2] mb-6">
             Отзывы клиентов
           </h2>
-          <div className="w-32 h-2 bg-[#AAFF00] mx-auto rounded-full" />
+          <div className="flex justify-center">
+            <WavyLine width={128} height={10} className="text-[#AAFF00]" />
+          </div>
         </div>
 
         {/* Сетка отзывов */}

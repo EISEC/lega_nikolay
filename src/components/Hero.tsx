@@ -1,105 +1,115 @@
 'use client'
 
-import Image from 'next/image'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-export function Hero() {
+interface HeroProps {
+  onWorksClick: () => void
+  onServicesClick: () => void
+  onReviewsClick: () => void
+  onContactClick: () => void
+}
+
+const Hero: React.FC<HeroProps> = ({
+  onWorksClick,
+  onServicesClick,
+  onReviewsClick,
+  onContactClick,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const navItems = [
-    { name: 'Наши работы', href: '#works' },
-    { name: 'Услуги', href: '#services' },
-    { name: 'Отзывы', href: '#reviews' },
-    { name: 'Контакты', href: '#contact' },
-  ]
-
-  const categories = [
-    { name: 'Сайты', active: true },
-    { name: 'Логотипы', active: false },
-    { name: 'Соцсети', active: false },
-    { name: 'Директ', active: false },
-  ]
+  const handleNavClick = (callback: () => void) => {
+    callback()
+    setIsMenuOpen(false)
+  }
 
   return (
-    <section className="relative min-h-screen bg-[#020205] overflow-hidden">
-      {/* Фоновое изображение */}
-      <div className="absolute inset-0">
-        <Image
-          src="/img/backgrounds/hero-bg.jpg"
+    <div className="relative bg-[#020205] w-full min-h-screen overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 right-0 w-full h-full">
+        {/* Background Image */}
+        <div
+          className="absolute right-[-10%] top-[-10%] w-[60%] h-[120%] bg-cover bg-center bg-no-repeat opacity-60 lg:opacity-80"
+          style={{ backgroundImage: 'url(/img/hero-background.png)' }}
+        />
+
+        {/* Portals - скрываем на мобильных */}
+        <img
+          src="/img/portal-large.svg"
           alt=""
-          fill
-          className="object-cover"
-          priority
+          className="hidden md:block absolute w-[60px] md:w-[80px] lg:w-[100px] h-[60px] md:h-[80px] lg:h-[100px] right-[10%] lg:right-[15%] bottom-[10%] lg:bottom-[15%] animate-pulse-glow"
+        />
+        <img
+          src="/img/portal-medium.svg"
+          alt=""
+          className="hidden md:block absolute w-[25px] md:w-[30px] lg:w-[35px] h-[25px] md:h-[30px] lg:h-[35px] right-[20%] lg:right-[25%] top-[30%] lg:top-[35%] animate-float"
+        />
+        <img
+          src="/img/portal-small.svg"
+          alt=""
+          className="hidden lg:block absolute w-[40px] lg:w-[50px] h-[40px] lg:h-[50px] right-[40%] lg:right-[45%] top-[50%] lg:top-[55%] opacity-80"
         />
       </div>
 
-      {/* Градиентный оверлей */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#020205] via-[#020205]/90 to-transparent" />
-
-      {/* Декоративные порталы */}
-      <div className="absolute inset-0 pointer-events-none">
-        <Image
-          src="/svg/ui/portal-1.svg"
+      {/* Read More Arrows */}
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <img
+          src="/img/read-more-arrows.svg"
           alt=""
-          width={100}
-          height={100}
-          className="absolute top-[30%] right-[15%] w-20 h-20 lg:w-24 lg:h-24 opacity-60 animate-pulse-glow"
-        />
-        <Image
-          src="/svg/ui/portal-2.svg"
-          alt=""
-          width={70}
-          height={70}
-          className="absolute top-[50%] right-[25%] w-14 h-14 lg:w-16 lg:h-16 opacity-40 animate-float"
-        />
-        <Image
-          src="/svg/ui/portal-3.svg"
-          alt=""
-          width={50}
-          height={50}
-          className="absolute top-[70%] right-[10%] w-10 h-10 lg:w-12 lg:h-12 opacity-30"
+          className="w-[24px] md:w-[31px] h-[32px] md:h-[42px] animate-bounce"
         />
       </div>
 
-      {/* Навигация */}
-      <nav className="relative z-50 pt-6">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between">
-            {/* Логотип */}
+      {/* Container for content */}
+      <div className="relative z-10 min-h-screen container flex flex-col mx-auto">
+        {/* Header Container */}
+        <div className="w-full">
+          {/* Header with wider container */}
+          <header className="w-full mx-auto flex items-center justify-between px-4 pt-6 md:pt-8 pb-4">
+            {/* Logo */}
             <div className="flex items-center">
-              <Image
-                src="/svg/ui/logo-lega.svg"
+              <img
+                src="/img/logo.svg"
                 alt="LEGA"
-                width={160}
-                height={52}
-                className="h-10 w-auto lg:h-12"
+                className="w-[100px] md:w-[120px] lg:w-[160px] h-auto"
               />
-              <span className="ml-3 text-white text-lg lg:text-xl font-light tracking-wider">
+              <span className="ml-2 md:ml-3 lg:ml-5 text-white text-lg md:text-xl lg:text-[30px] font-light font-neue-machina leading-[1.5] tracking-[0.05em]">
                 marketing
               </span>
             </div>
 
-            {/* Десктопное меню */}
-            <div className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-[#F2F2F2] hover:text-[#AAFF00] transition-colors duration-300 text-lg font-light"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-
-            {/* Кнопка "Задай вопрос" в навигации */}
-            <div className="hidden lg:block">
-              <button className="border-2 border-[#AAFF00] text-[#AAFF00] px-6 py-2 rounded-lg text-lg font-medium hover:bg-[#AAFF00] hover:text-[#020205] transition-all duration-300">
-                Задай вопрос
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-6 xl:space-x-12">
+              <button
+                onClick={onWorksClick}
+                className="text-[#F2F2F2] text-[16px] xl:text-[20px] font-light font-panton leading-[1.3] tracking-[0.05em] hover:text-[#AAFF00] transition-colors relative group"
+              >
+                Наши работы
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#AAFF00] transition-all duration-300 group-hover:w-full"></div>
               </button>
-            </div>
+              <button
+                onClick={onServicesClick}
+                className="text-[#F2F2F2] text-[16px] xl:text-[20px] font-light font-panton leading-[1.3] tracking-[0.05em] hover:text-[#AAFF00] transition-colors relative group"
+              >
+                Услуги
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#AAFF00] transition-all duration-300 group-hover:w-full"></div>
+              </button>
+              <button
+                onClick={onReviewsClick}
+                className="text-[#F2F2F2] text-[16px] xl:text-[20px] font-light font-panton leading-[1.3] tracking-[0.05em] hover:text-[#AAFF00] transition-colors relative group"
+              >
+                Отзывы
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#AAFF00] transition-all duration-300 group-hover:w-full"></div>
+              </button>
+              <button
+                onClick={onContactClick}
+                className="text-[#F2F2F2] text-[16px] xl:text-[20px] font-light font-panton leading-[1.3] tracking-[0.05em] hover:text-[#AAFF00] transition-colors relative group"
+              >
+                Контакты
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#AAFF00] transition-all duration-300 group-hover:w-full"></div>
+              </button>
+            </nav>
 
-            {/* Мобильный гамбургер */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1"
@@ -120,88 +130,85 @@ export function Hero() {
                 }`}
               />
             </button>
-          </div>
+          </header>
 
-          {/* Мобильное меню */}
+          {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="lg:hidden mt-6 py-4 border-t border-[#F2F2F2]/10">
-              <div className="space-y-4">
-                {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="block text-[#F2F2F2] hover:text-[#AAFF00] transition-colors duration-300 text-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-                <button className="w-full border-2 border-[#AAFF00] text-[#AAFF00] px-6 py-2 rounded-lg text-lg font-medium hover:bg-[#AAFF00] hover:text-[#020205] transition-all duration-300">
-                  Задай вопрос
+            <div className="lg:hidden absolute top-full left-0 right-0 bg-[#020205] border-t border-[#333] z-50">
+              <nav className="max-w-screen-xl mx-auto flex flex-col px-4 py-4 space-y-4">
+                <button
+                  onClick={() => handleNavClick(onWorksClick)}
+                  className="text-[#F2F2F2] text-lg font-light font-panton hover:text-[#AAFF00] transition-colors text-left"
+                >
+                  Наши работы
                 </button>
-              </div>
+                <button
+                  onClick={() => handleNavClick(onServicesClick)}
+                  className="text-[#F2F2F2] text-lg font-light font-panton hover:text-[#AAFF00] transition-colors text-left"
+                >
+                  Услуги
+                </button>
+                <button
+                  onClick={() => handleNavClick(onReviewsClick)}
+                  className="text-[#F2F2F2] text-lg font-light font-panton hover:text-[#AAFF00] transition-colors text-left"
+                >
+                  Отзывы
+                </button>
+                <button
+                  onClick={() => handleNavClick(onContactClick)}
+                  className="text-[#F2F2F2] text-lg font-light font-panton hover:text-[#AAFF00] transition-colors text-left"
+                >
+                  Контакты
+                </button>
+              </nav>
             </div>
           )}
-        </div>
-      </nav>
 
-      {/* Основной контент */}
-      <div className="relative z-10 pt-16 lg:pt-24 pb-16 min-h-[70vh] flex items-center">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
-            {/* Заголовок */}
-            <div className="mb-8">
-              <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold text-[#F2F2F2] leading-tight mb-6">
-                Современная упаковка
-                <br />
-                <span className="text-[#AAFF00]">твоего бизнеса</span>
+          {/* Navigation Underline - внутри контейнера */}
+          <div className="w-full mx-auto px-4">
+            <div className="w-full border-t border-[#AAFF00] opacity-30"></div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 w-full flex items-center">
+          <div className="w-full mx-auto pt-8 pb-16 md:pb-20">
+            {/* Content with limited width for better readability */}
+            <div className="max-w-5xl">
+              {/* Main Heading */}
+              <h1 className="text-[#F2F2F2] text-3xl md:text-4xl lg:text-6xl xl:text-[90px] font-medium font-neue-machina leading-[1.1] mb-6 md:mb-8 lg:mb-12">
+                Современная упаковка твоего бизнеса
               </h1>
 
-              {/* Волнистая зеленая линия */}
-              <div className="w-40 h-2 bg-[#AAFF00] rounded-full mb-8"></div>
-            </div>
+              {/* Wavy Line */}
+              <div className="mb-6 md:mb-8 lg:mb-12">
+                <img
+                  src="/img/wavy-line.svg"
+                  alt=""
+                  className="w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] h-auto"
+                />
+              </div>
 
-            {/* Описание */}
-            <p className="text-[#F2F2F2] text-xl lg:text-2xl leading-relaxed mb-12 max-w-3xl">
-              Комплексная прокачка бизнеса: от дизайна и разработки сайта до
-              продвижения в поисковых системах и соцсетях. Мы точно знаем, как
-              привлечь новых клиентов и увеличить продажи.
-            </p>
+              {/* Description */}
+              <p className="text-[#F2F2F2] text-base md:text-lg lg:text-xl xl:text-[20px] font-light font-panton leading-[1.5] tracking-[0.05em] mb-6 md:mb-8 lg:mb-12 max-w-3xl">
+                Комплексная прокачка бизнеса: от дизайна и разработки сайта до
+                продвижения в поисковых системах и соцсетях. Мы точно знаем, как
+                привлечь новых клиентов
+                <br />и увеличить продажи.
+              </p>
 
-            {/* Кнопка */}
-            <button className="border-2 border-[#AAFF00] text-[#AAFF00] px-8 py-4 lg:px-12 lg:py-5 rounded-lg text-lg lg:text-xl font-medium hover:bg-[#AAFF00] hover:text-[#020205] transition-all duration-300">
-              Задай вопрос
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Секция "Наши работы" */}
-      <div className="relative z-10 pb-12">
-        <div className="container mx-auto px-6">
-          <div className="text-center lg:text-left">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#F2F2F2] mb-8">
-              Наши работы
-            </h2>
-
-            {/* Категории фильтров */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-              {categories.map((category) => (
-                <button
-                  key={category.name}
-                  className={`px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300 ${
-                    category.active
-                      ? 'bg-[#AAFF00] text-[#020205] border-2 border-[#AAFF00]'
-                      : 'bg-transparent text-[#F2F2F2] border border-[#383838] hover:border-[#AAFF00] hover:text-[#AAFF00]'
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
+              {/* CTA Button */}
+              <button className="border border-[#AAFF00] bg-transparent hover:bg-[#AAFF00] hover:text-[#020205] transition-all duration-300 group rounded-md px-6 md:px-8 lg:px-12 py-3 md:py-4 lg:py-5 w-auto min-w-[180px] md:min-w-[200px] lg:min-w-[280px]">
+                <span className="text-[#AAFF00] group-hover:text-[#020205] text-base md:text-lg lg:text-xl xl:text-[24px] font-light font-neue-machina">
+                  Задай вопрос
+                </span>
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
+
+export default Hero
