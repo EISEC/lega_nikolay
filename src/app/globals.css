@@ -1,26 +1,181 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Дополнительные анимации */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes marquee-slow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Утилиты для анимаций */
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 20s linear infinite;
+}
+
+.animate-marquee-slow {
+  animation: marquee-slow 30s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Кастомные стили */
+.bg-hero-pattern {
+  background-image: radial-gradient(
+      circle at 25% 25%,
+      rgba(170, 255, 0, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(170, 255, 0, 0.05) 0%,
+      transparent 50%
+    );
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #aaff00 0%, #88cc00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020205;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aaff00;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #88cc00;
+}
+
+/* Стили для форм */
+.form-input {
+  @apply w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-lg text-[#F2F2F2] placeholder-[#666] focus:border-[#AAFF00] focus:outline-none focus:ring-2 focus:ring-[#AAFF00]/20 transition-all duration-300;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 bg-[#1a1a1a] border border-[#333] rounded-lg text-[#F2F2F2] placeholder-[#666] focus:border-[#AAFF00] focus:outline-none focus:ring-2 focus:ring-[#AAFF00]/20 transition-all duration-300 resize-none;
+}
+
+/* Кнопки */
+.btn-primary {
+  @apply bg-[#AAFF00] text-[#020205] px-8 py-4 rounded-lg font-bold hover:bg-[#88CC00] transition-all duration-300 shadow-lg hover:shadow-xl hover:transform hover:scale-105;
+}
+
+.btn-secondary {
+  @apply border-2 border-[#AAFF00] text-[#AAFF00] px-8 py-4 rounded-lg font-bold hover:bg-[#AAFF00] hover:text-[#020205] transition-all duration-300;
+}
+
+/* Карточки */
+.card-hover {
+  @apply hover:transform hover:scale-105 hover:-translate-y-2 transition-all duration-300;
+}
+
+.card-glow {
+  @apply hover:shadow-2xl hover:shadow-[#AAFF00]/20;
+}
+
+/* Декоративные элементы */
+.decoration-circle {
+  @apply absolute bg-[#AAFF00] rounded-full opacity-20;
+}
+
+.decoration-square {
+  @apply absolute bg-[#AAFF00] opacity-10 transform rotate-45;
+}
+
+/* Градиенты */
+.gradient-primary {
+  background: linear-gradient(135deg, #aaff00 0%, #88cc00 100%);
+}
+
+.gradient-dark {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.gradient-overlay {
+  background: linear-gradient(
+    to right,
+    #020205 0%,
+    rgba(2, 2, 5, 0.8) 50%,
+    transparent 100%
+  );
+}
+
+/* Медиа запросы для анимаций */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-marquee-slow,
+  .animate-float,
+  .animate-pulse-glow {
+    animation: none;
+  }
 }
